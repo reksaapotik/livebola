@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Live Bola</title>
+<style>
+body { background:#0f0f0f; color:white; font-family:Arial; margin:0; }
+header { background:#111; padding:15px; text-align:center; color:#00ff99; font-size:22px; }
+.container { max-width:900px; margin:auto; padding:20px; }
+.match { background:#1c1c1c; padding:15px; margin-bottom:10px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; }
+button { background:#00ff99; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; }
+button:hover { background:#00cc77; }
+</style>
+</head>
+<body>
+
+<header>⚽ LIVE STREAMING BOLA</header>
+
+<div class="container" id="matchList"></div>
+
+<script>
+fetch('matches.json')
+.then(res => res.json())
+.then(data => {
+    const container = document.getElementById("matchList");
+    data.forEach(match => {
+        container.innerHTML += `
+            <div class="match">
+                <div>
+                    <h3>${match.title}</h3>
+                    <small>${match.channel}</small>
+                </div>
+                <button onclick="watchMatch(${match.id})">WATCH</button>
+            </div>
+        `;
+    });
+});
+
+function watchMatch(id){
+    window.location.href = "watch.html?id=" + id;
+}
+</script>
+
+</body>
+</html>
