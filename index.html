@@ -4,41 +4,166 @@
 <meta charset="UTF-8">
 <title>Live Bola</title>
 <style>
-body { background:#0f0f0f; color:white; font-family:Arial; margin:0; }
-header { background:#111; padding:15px; text-align:center; color:#00ff99; font-size:22px; }
-.container { max-width:900px; margin:auto; padding:20px; }
-.match { background:#1c1c1c; padding:15px; margin-bottom:10px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; }
-button { background:#00ff99; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; }
-button:hover { background:#00cc77; }
+
+body {
+    background:#0f0f0f;
+    color:white;
+    font-family:Arial;
+    margin:0;
+}
+
+.title-container {
+    padding:15px;
+    background:#111;
+    font-size:22px;
+    text-align:center;
+    color:#ff3b3b;
+}
+
+.list-match {
+    max-width:1000px;
+    margin:auto;
+    padding:15px;
+}
+
+.item-match {
+    display:block;
+    background:#1c1c1c;
+    border-radius:8px;
+    margin-bottom:15px;
+    padding:15px;
+    text-decoration:none;
+    color:white;
+    transition:0.3s;
+}
+
+.item-match:hover {
+    background:#222;
+}
+
+.box-time {
+    display:flex;
+    justify-content:space-between;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.time-match {
+    padding:3px 10px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.live {
+    background:red;
+}
+
+.upcoming {
+    background:#444;
+}
+
+.league-name {
+    opacity:0.8;
+}
+
+.body-web {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.team {
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.team img {
+    width:40px;
+    height:40px;
+    object-fit:contain;
+}
+
+.vs {
+    font-weight:bold;
+    font-size:18px;
+}
+
+.box-watch {
+    text-align:right;
+    margin-top:10px;
+    font-weight:bold;
+    color:#00ff99;
+}
+
 </style>
 </head>
 <body>
 
-<header>⚽ LIVE STREAMING BOLA</header>
+<div class="title-container">
+🔥 Live Now
+</div>
 
-<div class="container" id="matchList"></div>
+<div class="list-match" id="matchList"></div>
 
 <script>
+
 fetch('matches.json')
 .then(res => res.json())
 .then(data => {
+
     const container = document.getElementById("matchList");
+
     data.forEach(match => {
+
+        const now = new Date();
+        const kickoff = new Date(match.kickoff);
+
+        let statusClass = "upcoming";
+        let statusText = kickoff.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+        if(now >= kickoff) {
+            statusClass = "live";
+            statusText = "LIVE";
+        }
+
         container.innerHTML += `
-            <div class="match">
-                <div>
-                    <h3>${match.title}</h3>
-                    <small>${match.channel}</small>
+        <a href="watch.html?id=${match.id}" class="item-match">
+            
+            <div class="box-time">
+                <div class="time-match ${statusClass}">
+                    ${statusText}
                 </div>
-                <button onclick="watchMatch(${match.id})">WATCH</button>
+                <div class="league-name">
+                    ${match.league}
+                </div>
             </div>
+
+            <div class="body-web">
+                
+                <div class="team">
+                    <span>${match.home}</span>
+                    <img src="${match.homeLogo}">
+                </div>
+
+                <div class="vs">VS</div>
+
+                <div class="team">
+                    <img src="${match.awayLogo}">
+                    <span>${match.away}</span>
+                </div>
+
+            </div>
+
+            <div class="box-watch">
+                ▶ WATCH NOW
+            </div>
+
+        </a>
         `;
     });
 });
 
-function watchMatch(id){
-    window.location.href = "watch.html?id=" + id;
-}
 </script>
 
 </body>
