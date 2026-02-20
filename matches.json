@@ -1,20 +1,12 @@
 [
   {
     "id": 1,
-    "title": "Fenerbahce Vs Nottingham Forest",
-    "stream": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
-    "channel": "Channel 1"
-  },
-  {
-    "id": 2,
-    "title": "Brann Vs Bologna",
-    "stream": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
-    "channel": "Channel 2"
-  },
-  {
-    "id": 3,
-    "title": "Celtic Vs VFB Stuttgart",
-    "stream": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
-    "channel": "Channel 3"
+    "league": "Ukraine Premier League",
+    "home": "Veres-Rivne",
+    "away": "Vorskla Poltava",
+    "homeLogo": "https://upload.wikimedia.org/wikipedia/en/5/5c/FC_Veres_Rivne_logo.png",
+    "awayLogo": "https://upload.wikimedia.org/wikipedia/en/7/7c/FC_Vorskla_Poltava_logo.png",
+    "kickoff": "2026-02-20T20:00:00",
+    "stream": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
   }
 ]
